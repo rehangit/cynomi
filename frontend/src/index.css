@@ -1,0 +1,58 @@
+body {
+  caret-color: transparent;
+}
+
+body input,
+body textarea {
+  caret-color: #9d45c8;
+}
+
+header button:last-of-type {
+  position: absolute;
+  right: 1em;
+  top: 1.5em;
+}
+
+dialog {
+  position: absolute;
+  top: 10vh;
+  border-radius: 1vw;
+  min-width: 600px;
+}
+
+dialog::backdrop {
+  background-color: #7777;
+  backdrop-filter: blur(2px);
+}
+
+button:hover:not(:disabled),
+button:focus:not(:disabled) {
+  background-color: hsl(277, 100%, 65%);
+}
+
+.rdt_Pagination button:hover:disabled,
+.rdt_Pagination button:focus:disabled,
+button.button-clear,
+button.button-clear:focus {
+  background-color: #a5c1;
+}
+
+.rdt_Pagination button:hover:not(:disabled),
+.rdt_Pagination button:focus:not(:disabled) {
+  background-color: hsl(277, 100%, 65%) !important;
+  fill: white;
+}
+
+.rdt_Pagination select {
+  margin-bottom: inherit;
+}
+
+.rdt_Pagination select + svg {
+  display: none;
+}
+
+button.button-outline:hover,
+button.button-clear:hover {
+  background-color: #a5c;
+  color: white;
+}
