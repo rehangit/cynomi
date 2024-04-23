@@ -1,29 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-import { UserCounts } from '../interfaces/SleepRecord';
+import { UserCounts } from '../interfaces/UserCounts';
+import { AppContext } from '../store/appStore';
 const { REACT_APP_SERVER } = process.env;
 
 type ApiResult = UserCounts[];
-type SleepRecordsListInput = {
-  from: string;
-  setSelectedName: (name: string) => void;
-};
-
 type DataRow = UserCounts & { index: number };
 
-export default function SleepRecordsList({ from, setSelectedName }: SleepRecordsListInput) {
-  const [records, setRecords] = useState<UserCounts[]>([]);
-  const [selected, setSelected] = useState('');
+export default function UserCountsList() {
+  const [state, dispatch] = useContext(AppContext);
+  const [userCounts, setUserCounts] = useState<UserCounts[]>([]);
 
   useEffect(() => {
-    const url = `${REACT_APP_SERVER}/sleep-records/user-counts?from=${from}&limit=100`;
+    const url = `${REACT_APP_SERVER}/sleep-records/user-counts?from=${state.since}&limit=1000`;
 
     fetch(url)
       .then((res) => (res.ok ? res.json() : []))
       .then((apiResult: ApiResult) => {
-        setRecords(apiResult || []);
+        setUserCounts(apiResult || []);
+        if (!state.name && apiResult?.length) {
+          dispatch({ type: 'name', value: apiResult?.[0]?.name });
+        }
       });
-  }, [from]);
+  }, [state.refresh, state.since]);
 
   const columns = [
     { name: 'Name', selector: ({ name }: UserCounts) => name },
@@ -37,25 +36,18 @@ export default function SleepRecordsList({ from, setSelectedName }: SleepRecords
       style={{ fontFamily: 'monospace' }}
       dense
       columns={columns}
-      data={records.map((rec, index): DataRow => ({ index, ...rec }))}
+      data={userCounts.map((rec, index): DataRow => ({ index, ...rec }))}
       highlightOnHover
       pointerOnHover
       pagination
       onRowClicked={({ name }) => {
         if (name) {
-          setSelectedName(name);
-          setSelected(name);
+          dispatch({ type: 'selected-name', value: name });
         }
       }}
-      // conditionalRowStyles={[
-      //   {
-      //     when: (row) => row.index === selected?.index,
-      //     style: { backgroundColor: '#9d45c8', color: 'white' },
-      //   },
-      // ]}
       selectableRowsSingle
       selectableRowsHighlight
-      selectableRowSelected={(row) => row.name === selected}
+      selectableRowSelected={(row) => row.name === state.name}
       customStyles={{
         headCells: { style: { fontWeight: 'bold', fontSize: 'large' } },
         cells: { style: { fontSize: 'larger' } },

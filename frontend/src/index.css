@@ -7,9 +7,10 @@ body textarea {
   caret-color: #9d45c8;
 }
 
+button.add-sleep-record,
 header button:last-of-type {
   position: absolute;
-  right: 1em;
+  right: 2em;
   top: 1.5em;
 }
 
@@ -28,6 +29,12 @@ dialog::backdrop {
 button:hover:not(:disabled),
 button:focus:not(:disabled) {
   background-color: hsl(277, 100%, 65%);
+}
+
+button.button-outline:hover,
+button.button-clear:hover {
+  background-color: #a5c;
+  color: white;
 }
 
 .rdt_Pagination button:hover:disabled,
@@ -49,10 +56,4 @@ button.button-clear:focus {
 
 .rdt_Pagination select + svg {
   display: none;
-}
-
-button.button-outline:hover,
-button.button-clear:hover {
-  background-color: #a5c;
-  color: white;
 }

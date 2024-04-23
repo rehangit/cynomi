@@ -7,10 +7,3 @@ export interface SleepRecordFormInput {
 export interface SleepRecord extends SleepRecordFormInput {
   date: string;
 }
-
-export interface UserCounts {
-  name: string;
-  gender: string;
-  latest: string;
-  count: number;
-}

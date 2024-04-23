@@ -1,20 +1,30 @@
-import { useState } from 'react';
+import 'react';
 import CreateSleepRecord from './CreateSleepRecordForm';
-import SleepRecordsPage from './SleepRecordsPage';
+import { AppStore } from '../store/appStore';
+import UserCountsList from './UserCountsList';
+import SleepRecordsChart from './SleepRecordChart';
 
 export default function App() {
-  const [showDlg, setShowDlg] = useState(0);
-  console.log(process.env);
   return (
-    <div className="container">
-      <header>
-        <h1 className="inline">Sleep Records</h1>
-        <button onClick={() => setShowDlg((value) => value + 1)}>Add New Record</button>
-      </header>
-      <main>
-        <SleepRecordsPage />
-        <CreateSleepRecord show={showDlg} />
-      </main>
-    </div>
+    <AppStore>
+      <div className="container">
+        <div className="row">
+          <div className="column">
+            <h1 className="inline">Sleep Records</h1>
+            <CreateSleepRecord />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="column">
+            <UserCountsList />
+          </div>
+
+          <div className="column">
+            <SleepRecordsChart />
+          </div>
+        </div>
+      </div>
+    </AppStore>
   );
 }

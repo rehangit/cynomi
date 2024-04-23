@@ -1,35 +1,33 @@
 import 'react';
-import ReactEcharts from 'echarts-for-react';
+import ReactEcharts, { EChartsOption } from 'echarts-for-react';
 import { SleepRecord } from '../interfaces/SleepRecord';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../store/appStore';
 
-type SleepRecordsChartInput = {
-  name: string | undefined;
-  from: string;
-};
 const { REACT_APP_SERVER } = process.env;
 
-export default function SleepRecordsChart({ name, from }: SleepRecordsChartInput) {
+export default function SleepRecordsChart() {
+  const [state] = useContext(AppContext);
   const [userRecords, setUserRecords] = useState<SleepRecord[]>([]);
 
   useEffect(() => {
-    if (!name?.length) return;
-    fetch(`${REACT_APP_SERVER}/sleep-records?name=${name}&from=${from}`)
+    if (!state.name?.length) return;
+    fetch(`${REACT_APP_SERVER}/sleep-records?name=${state.name}&from=${state.since}`)
       .then((res) => res.json())
       .then((urecs) => {
         setUserRecords(urecs);
       });
-  }, [name, from]);
+  }, [state.name, state.since]);
 
-  const option = {
+  const option: EChartsOption = {
     title: {
       text: 'Last 7 Day Sleep Records',
       textStyle: { fontFamily: 'Roboto' },
-      subtext: name || 'Select a User from the table',
+      subtext: state.name || 'Select a User from the table',
       subtextStyle: { fontWeight: 'bolder' },
       left: 'center',
     },
-    yAxis: {},
+    yAxis: { min: 0, max: 15 },
     xAxis: {
       data: userRecords.map(({ date }) => new Date(date).toISOString().slice(0, 10)),
     },
