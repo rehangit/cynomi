@@ -28,14 +28,14 @@ export class SleepRecordsService {
         const fromDate = new Date(from || new Date(0)).toISOString().slice(0, 10);
         where.date = { $gte: fromDate, $lte: toDate };
       }
-      console.log('findAll', { where })
+      // console.log('findAll', { where })
       return this.sleepRecord.where(where);
     }
     return this.sleepRecord.find();
   }
 
   countByUsers(limit?: number, from?: string, to?: string) {
-    console.log('countByUsers', { limit, from, to });
+    // console.log('countByUsers', { limit, from, to });
     return this.sleepRecord.aggregate([
       {
         $match: {
@@ -78,6 +78,8 @@ export class SleepRecordsService {
       {
         $sort: {
           latest: -1,
+          count: -1,
+          name: 1
         },
       },
       {
