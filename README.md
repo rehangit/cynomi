@@ -2,6 +2,20 @@
 
 This repo implements the technical task outlined in the [document](./CHALLENGE.md).
 
+## [Demo](https://cynomi-app.onrender.com)
+
+The frontend and backends implemented for this app are deployed on Render.
+
+- Frontend: https://cynomi-app.onrender.com
+
+- Backend API: https://cynomi.onrender.com
+
+- Database: https://cloud.mongodb.com/
+
+  Read only access: (cynomi/ZqfHyrDQyNJtC2V6)
+
+  url: `mongodb+srv://cynomi:ZqfHyrDQyNJtC2V6@rehan-mongodb.homoc69.mongodb.net/cynomi?retryWrites=true&w=majority&appName=rehan-mongodb`
+
 ## Overview
 
 ### Frontend
